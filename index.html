@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>Ano Malies | Community Report Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app-shell">
+        <aside class="sidebar">
+            <header class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+                </div>
+                <div>
+                    <h1>Ano Malies</h1>
+                    <p>Gulod Community Map</p>
+                </div>
+                <span class="live-pill"><i></i> LIVE</span>
+            </header>
+
+            <section class="welcome-card">
+                <span class="eyebrow">YOUR COMMUNITY, BETTER</span>
+                <h2>See something?<br><span>Say something.</span></h2>
+                <p>Help make Brgy. Gulod safer, cleaner, and better for everyone.</p>
+                <div class="welcome-decoration" aria-hidden="true">
+                    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="8"/></svg>
+                </div>
+            </section>
+
+            <section class="report-section" aria-labelledby="reportTitle">
+                <div class="section-heading">
+                    <div class="section-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M12 3 2.8 19a1.4 1.4 0 0 0 1.2 2h16a1.4 1.4 0 0 0 1.2-2L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg>
+                    </div>
+                    <div>
+                        <h2 id="reportTitle">Create a report</h2>
+                        <p>It only takes a minute</p>
+                    </div>
+                </div>
+
+                <form id="reportForm">
+                    <div class="field-group">
+                        <label for="category">What's the issue?</label>
+                        <select id="category" class="form-select" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Weather & Environmental Hazards">Weather & Environmental Hazards</option>
+                            <option value="Infrastructure & Pavement Issues">Infrastructure & Pavement Issues</option>
+                            <option value="Public Safety & Utilities">Public Safety & Utilities</option>
+                            <option value="Waste Management & Sanitation">Waste Management & Sanitation</option>
+                            <option value="Community Mobility Obstructions">Community Mobility Obstructions</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="userName">Your name</label>
+                        <input type="text" id="userName" class="form-control" placeholder="e.g. Juan Dela Cruz" autocomplete="name" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="description">Tell us more</label>
+                        <textarea id="description" class="form-control" rows="3" placeholder="What happened? Add helpful details..." required></textarea>
+                    </div>
+
+                    <div class="location-field">
+                        <div class="location-copy">
+                            <span class="location-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            </span>
+                            <span><strong>Pin the location</strong><small>Click anywhere on the map</small></span>
+                        </div>
+                        <div class="coordinates">
+                            <input type="text" id="lat" aria-label="Latitude" readonly placeholder="LAT">
+                            <span></span>
+                            <input type="text" id="lng" aria-label="Longitude" readonly placeholder="LNG">
+                        </div>
+                    </div>
+
+                    <small class="form-message error-message d-none" id="errorMsg">Please select a location on the map.</small>
+                    <div class="form-message" id="formStatus" role="status" aria-live="polite"></div>
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        <span>Submit report</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </button>
+                    <p class="privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Your report helps the whole community</p>
+                </form>
+            </section>
+
+            <section class="legend-section">
+                <div class="legend-title">
+                    <h2>Report categories</h2>
+                    <span>5 types</span>
+                </div>
+                <ul class="category-list">
+                    <li><span class="category-icon weather"><svg viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4m0-12.8L17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg></span><span>Weather & environment</span><i class="legend-dot weather-dot"></i></li>
+                    <li><span class="category-icon infra"><svg viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-9M15 6h6v6"/></svg></span><span>Roads & infrastructure</span><i class="legend-dot infra-dot"></i></li>
+                    <li><span class="category-icon safety"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Safety & utilities</span><i class="legend-dot safety-dot"></i></li>
+                    <li><span class="category-icon waste"><svg viewBox="0 0 24 24"><path d="M4 7h16m-10 4v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg></span><span>Waste & sanitation</span><i class="legend-dot waste-dot"></i></li>
+                    <li><span class="category-icon mobility"><svg viewBox="0 0 24 24"><path d="M5 17h14l-2-8H7l-2 8Zm3 0v2m8-2v2M8 9l1-4h6l1 4M7 13h.01M17 13h.01"/></svg></span><span>Community mobility</span><i class="legend-dot mobility-dot"></i></li>
+                </ul>
+            </section>
+            <footer class="sidebar-footer"><span class="footer-pulse"></span> Together for a better Gulod</footer>
+        </aside>
+
+        <section class="map-container" aria-label="Community report map">
+            <div class="map-topbar">
+                <div class="map-title">
+                    <span class="map-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20V6.5Z"/><path d="M9 4v13.5m6-11V20"/></svg></span>
+                    <span><strong>Gulod, Novaliches</strong><small>Quezon City, Philippines</small></span>
+                </div>
+                <div class="map-hint"><span class="hint-pulse"></span> Tap the map to add a pin</div>
+            </div>
+            <div id="map"></div>
+            <div class="map-caption"><span class="caption-dot"></span> Community reports appear here</div>
+        </section>
+    </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="gulod-boundary.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
